@@ -26,10 +26,21 @@ function onDeviceReady() {
 
     console.log('Running cordova-' + cordova.platformId + '@' + cordova.version);
 
-    $("#button").click(function() {
+    $("#button-add").click(function() {
         if ($("#input-text").val().trim() != "") {
-            $("ul").append(`<li>${$("#input-text").val()}</li>`);
+            let target = $(".task-div").length
+            $("ul").append(`
+                <li id="task-${target}">
+                    <div class="task-div">
+                        <label>${$("#input-text").val()}</label>
+                        <button class="delete-button" target>a</button>
+                    </div>
+                </li>`);
             $("ul").listview("refresh");
         }
+        $(".delete-button").click(function() {
+            $(`#task-${this.parentElement.id}`).remove()
+        })
     })
+
 }

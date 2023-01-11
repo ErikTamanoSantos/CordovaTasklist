@@ -70,6 +70,21 @@ h1 {
     text-align:center;
 }
 
+.task {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.task label {
+    display: flex !important;
+    justify-content: center;
+}
+
+.delete-button {
+    width: 100px !important;
+}
+
 .event {
     border-radius:4px;
     color:#FFFFFF;
