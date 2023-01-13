@@ -80,11 +80,11 @@ h1 {
     display: flex !important;
     justify-content: center;
 }
-
+/*
 .delete-button {
     width: 100px !important;
 }
-
+*/
 .event {
     border-radius:4px;
     color:#FFFFFF;

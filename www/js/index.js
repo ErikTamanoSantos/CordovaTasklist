@@ -28,12 +28,11 @@ function onDeviceReady() {
 
     $("#button-add").click(function() {
         if ($("#input-text").val().trim() != "") {
-            let target = $(".task-div").length
+            //let task_num = $(".task-div").length
             $("ul").append(`
-                <li id="task-${target}">
+                <li>
                     <div class="task-div">
                         <label>${$("#input-text").val()}</label>
-                        <button class="delete-button" target>a</button>
                     </div>
                 </li>`);
             $("ul").listview("refresh");
