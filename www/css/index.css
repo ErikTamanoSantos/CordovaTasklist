@@ -77,14 +77,20 @@ h1 {
 }
 
 .task label {
-    display: flex !important;
-    justify-content: center;
+    display: flex;
+    align-content: center;
 }
-/*
+
 .delete-button {
-    width: 100px !important;
+    width: 35px !important;
+    border-radius: 5px;
+    border: solid;
+    border-color: lightgray;
+    height: 35px;
+    background: url(../img/trashbin.png) no-repeat center center;
+    background-size: 25px 25px;
 }
-*/
+
 .event {
     border-radius:4px;
     color:#FFFFFF;
@@ -96,6 +102,16 @@ h1 {
 #input-group {
     display: flex;
     flex-direction: column;
+}
+
+.edit-group {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.edit-group label {
+    margin-right: 10px !important;
 }
 
 .event.listening {

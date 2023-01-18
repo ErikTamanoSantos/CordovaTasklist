@@ -28,18 +28,32 @@ function onDeviceReady() {
 
     $("#button-add").click(function() {
         if ($("#input-text").val().trim() != "") {
-            //let task_num = $(".task-div").length
             $("ul").append(`
                 <li>
-                    <div class="task-div">
-                        <label>${$("#input-text").val()}</label>
-                    </div>
+                    <a>
+                        <div class="task">
+                            <label>${$("#input-text").val()}</label>
+                            <button class="delete-button"></button>
+                        </div>
+                    </a>
                 </li>`);
             $("ul").listview("refresh");
-        }
-        $(".delete-button").click(function() {
-            $(`#task-${this.parentElement.id}`).remove()
-        })
-    })
 
+            $("li").off().on("click", function(event) {
+                if (event.target.className !== "delete-button") {
+                    let label = $(this).children().children().find("label");
+                    $("#edit-task").val(label.text());
+                    $("#back-button").off().on("click", function() {
+                        label.text($("#edit-task").val())
+                        window.location.replace("http://localhost:8000/index.html#")
+                    })
+                    window.location.replace("http://localhost:8000/index.html#pageEdit");
+                }
+            });
+
+            $(".delete-button").off().on("click", function() {
+                $(this).parent().parent().get(0).remove()
+            })
+        }
+    })
 }
