@@ -22,38 +22,64 @@
 document.addEventListener('deviceready', onDeviceReady, false);
 
 function onDeviceReady() {
+    let array = JSON.parse(localStorage.getItem("tasks"))
+    refreshTaskList();
     // Cordova is now initialized. Have fun!
 
     console.log('Running cordova-' + cordova.platformId + '@' + cordova.version);
 
     $("#button-add").click(function() {
         if ($("#input-text").val().trim() != "") {
-            $("ul").append(`
-                <li>
-                    <a>
-                        <div class="task">
-                            <label>${$("#input-text").val()}</label>
-                            <button class="delete-button"></button>
-                        </div>
-                    </a>
-                </li>`);
-            $("ul").listview("refresh");
+            let array = JSON.parse(localStorage.getItem("tasks"))
+            array.push($("#input-text").val().trim());
+            localStorage.setItem("tasks", JSON.stringify(array))
+            refreshTaskList(array);
+        }
+        $("#input-text").val("");
+    })
+}
 
-            $("li").off().on("click", function(event) {
+function refreshTaskList() {
+    let array = JSON.parse(localStorage.getItem("tasks"))
+    let list = "";
+    if (array == null) {
+        localStorage.setItem("tasks", JSON.stringify([]))
+    } else {
+        for (i = 0; i < array.length; i++) {
+            list += `
+                    <li>
+                        <a>
+                            <div class="task" id=${i}>
+                                <label id="${i}">${array[i]}</label>
+                                <button id="delete-button-${i}" class="delete-button"></button>
+                            </div>
+                        </a>
+                    </li>`
+        }
+        $("ul").html(list)
+        $("ul").listview("refresh");
+
+        $("li").off().on("click", function(event) {
                 if (event.target.className !== "delete-button") {
                     let label = $(this).children().children().find("label");
                     $("#edit-task").val(label.text());
                     $("#back-button").off().on("click", function() {
-                        label.text($("#edit-task").val())
+                        let array = JSON.parse(localStorage.getItem("tasks"))
+                        array[$(label).attr("id")] = $("#edit-task").val()
+                        localStorage.setItem("tasks", JSON.stringify(array))
+                        refreshTaskList();
                         window.location.replace("http://localhost:8000/index.html#")
                     })
                     window.location.replace("http://localhost:8000/index.html#pageEdit");
                 }
             });
 
-            $(".delete-button").off().on("click", function() {
-                $(this).parent().parent().get(0).remove()
-            })
-        }
-    })
+        $(".delete-button").off().on("click", function() {
+            let array = JSON.parse(localStorage.getItem("tasks"));
+            array.splice($(this).parent().parent().children().attr("id"), 1);
+            localStorage.setItem("tasks", JSON.stringify(array))
+            refreshTaskList();
+        })
+    }
+
 }
